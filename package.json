@@ -1,0 +1,45 @@
+{
+  "name": "slack-frp",
+  "description": "a terse, functional reactive slack api",
+  "version": "0.0.0",
+  "keywords": [
+    "slack",
+    "api",
+    "functional",
+    "rtm",
+    "real",
+    "time",
+    "web",
+    "hook",
+    "bot",
+    "integration"
+  ],
+  "scripts": {
+    "build": "mv lib src && babel src -d lib --optional runtime --stage 0"
+  },
+  "main": "lib",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/declandewet/slack-frp"
+  },
+  "bugs": {
+    "url": "http://github.com/declandewet/slack-frp/issues",
+    "email": "declandewet@me.com"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "devDependencies": {
+    "babel": "^5.8.23",
+    "nodemon": "^1.4.1"
+  },
+  "scripts": {
+    "dev": "nodemon --exec babel-node --stage 0 -- lib/index.js"
+  },
+  "dependencies": {
+    "baconjs": "^0.7.71",
+    "node-fetch": "^1.3.2",
+    "ws": "^0.8.0"
+  }
+}
