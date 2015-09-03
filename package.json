@@ -14,9 +14,6 @@
     "bot",
     "integration"
   ],
-  "scripts": {
-    "build": "mv lib src && babel src -d lib --optional runtime --stage 0"
-  },
   "main": "lib",
   "license": "MIT",
   "repository": {
@@ -35,7 +32,8 @@
     "nodemon": "^1.4.1"
   },
   "scripts": {
-    "dev": "nodemon --exec babel-node --stage 0 -- lib/index.js"
+    "prepublish": "mv lib src && babel src -d lib --optional runtime --stage 0",
+    "postpublish": "rm -rf lib && mv src lib"
   },
   "dependencies": {
     "baconjs": "^0.7.71",
