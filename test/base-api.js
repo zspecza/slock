@@ -17,4 +17,8 @@ describe('BaseAPI class', () => {
     );
   });
 
+  it('should have a method for accessing slack methods', () => {
+    expect(new BaseAPI('')).to.have.property('method').that.is.a('function');
+  });
+
 });
