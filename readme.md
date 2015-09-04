@@ -1,3 +1,10 @@
+![build status](https://img.shields.io/travis/declandewet/slack-frp.svg?style=flat-square)
+![test coverage](https://img.shields.io/coveralls/declandewet/slack-frp.svg?style=flat-square)
+![dependency status](https://img.shields.io/david/declandewet/slack-frp.svg?style=flat-square)
+![dev dependency status](https://img.shields.io/david/dev/declandewet/slack-frp.svg?style=flat-square)
+![npm downloads](https://img.shields.io/npm/dm/slack-frp.svg?style=flat-square)
+![npm version](https://img.shields.io/npm/v/slack-frp.svg?style=flat-square)
+![npm license](https://img.shields.io/npm/l/slack-frp.svg?style=flat-square)
 
 SlackFRP
 ---------

@@ -17,7 +17,8 @@
   "scripts": {
     "prepublish": "mv lib src && babel src -d lib --optional runtime --stage 0",
     "postpublish": "rm -rf lib && mv src lib",
-    "test": "babel-node node_modules/.bin/isparta cover node_modules/.bin/_mocha"
+    "test": "babel-node node_modules/.bin/isparta cover node_modules/.bin/_mocha",
+    "coveralls": "cat ./coverage/lcov.info | coveralls"
   },
   "main": "lib",
   "license": "MIT",
@@ -35,6 +36,7 @@
   "devDependencies": {
     "babel": "^5.8.23",
     "chai": "^3.2.0",
+    "coveralls": "^2.11.4",
     "isparta": "^3.0.4",
     "istanbul": "^0.3.19",
     "mocha": "^2.3.0"
