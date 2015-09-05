@@ -15,8 +15,9 @@
     "integration"
   ],
   "scripts": {
-    "prepublish": "mv lib src && babel src -d lib --optional runtime --stage 0",
-    "postpublish": "rm -rf lib && mv src lib",
+    "release": "npm publish",
+    "prerelease": "mv lib src && babel src -d lib --optional runtime --stage 0",
+    "postrelease": "rm -rf lib && mv src lib",
     "test": "mocha",
     "coverage": "babel-node ./node_modules/.bin/isparta cover _mocha",
     "precoveralls": "npm run coverage",
