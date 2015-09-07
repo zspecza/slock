@@ -1,7 +1,7 @@
 {
   "name": "slack-frp",
   "description": "a terse, functional reactive slack api",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "keywords": [
     "slack",
     "api",
