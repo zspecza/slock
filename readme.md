@@ -1,13 +1,13 @@
 Info | Badges
 -----|-------
-Version | [![github release](https://img.shields.io/github/release/declandewet/slack-frp.svg?style=flat-square)](https://github.com/declandewet/slack-frp/releases/latest) [![npm version](https://img.shields.io/npm/v/slack-frp.svg?style=flat-square)](http://npmjs.org/package/slack-frp)
-License | [![npm license](https://img.shields.io/npm/l/slack-frp.svg?style=flat-square)](https://github.com/declandewet/slack-frp/blob/master/license.md)
-Popularity | [![npm downloads](https://img.shields.io/npm/dm/slack-frp.svg?style=flat-square)](http://npm-stat.com/charts.html?package=slack-frp)
-Testing | [![build status](https://img.shields.io/travis/declandewet/slack-frp.svg?style=flat-square)](https://travis-ci.org/declandewet/slack-frp) [![test coverage](https://img.shields.io/coveralls/declandewet/slack-frp.svg?style=flat-square)](https://coveralls.io/github/declandewet/slack-frp)
-Quality | [![dependency status](https://img.shields.io/david/declandewet/slack-frp.svg?style=flat-square)](https://david-dm.org/declandewet/slack-frp) [![dev dependency status](https://img.shields.io/david/dev/declandewet/slack-frp.svg?style=flat-square)](https://david-dm.org/declandewet/slack-frp#info=devDependencies)
+Version | [![github release](https://img.shields.io/github/release/declandewet/slock.svg?style=flat-square)](https://github.com/declandewet/slock/releases/latest) [![npm version](https://img.shields.io/npm/v/slock.svg?style=flat-square)](http://npmjs.org/package/slock)
+License | [![npm license](https://img.shields.io/npm/l/slock.svg?style=flat-square)](https://github.com/declandewet/slock/blob/master/license.md)
+Popularity | [![npm downloads](https://img.shields.io/npm/dm/slock.svg?style=flat-square)](http://npm-stat.com/charts.html?package=slock)
+Testing | [![build status](https://img.shields.io/travis/declandewet/slock.svg?style=flat-square)](https://travis-ci.org/declandewet/slock) [![test coverage](https://img.shields.io/coveralls/declandewet/slock.svg?style=flat-square)](https://coveralls.io/github/declandewet/slock)
+Quality | [![dependency status](https://img.shields.io/david/declandewet/slock.svg?style=flat-square)](https://david-dm.org/declandewet/slock) [![dev dependency status](https://img.shields.io/david/dev/declandewet/slock.svg?style=flat-square)](https://david-dm.org/declandewet/slock#info=devDependencies)
 
 
-SlackFRP
+Slock
 ---------
 
 > **Note** this module is in _extremely_ early development. There are no
@@ -15,7 +15,7 @@ SlackFRP
 > [versioning might be a little different](http://markup.im/#q4_cRZ1Q).
 > So don't use this in production at the moment - but feel free to play with it!
 
-SlackFRP is a Node.js module for working with the various Slack APIs, built atop
+Slock is a Node.js module for working with the various Slack APIs, built atop
 functional reactive programming principles.
 
 The benefit of using functional reactive programming for such
@@ -28,16 +28,16 @@ terse, and this makes maintainability an absolute dream.
 Installation
 ============
 
-SlackFRP can be installed by executing the following command in a terminal:
+Slock can be installed by executing the following command in a terminal:
 
 ```
-npm install slack-frp --save
+npm install slock --save
 ```
 
 Usage
 ==========
 
-SlackFRP tries to be as inexplicit as possible, and as such doesn't require
+Slock tries to be as inexplicit as possible, and as such doesn't require
 much of a learning curve (even if functional reactive programming, observables
 and EventStreams are not quite your strong point).
 
@@ -52,7 +52,7 @@ our bot's API token.
 
 ```js
 // import the module
-var Slack = require('slack-frp');
+var Slack = require('slock');
 
 // give it our token
 var slack = new Slack('insert api token here');
@@ -97,7 +97,7 @@ Putting it all together, we have something that looks like this:
 
 ```js
 // import the module
-var Slack = require('slack-frp');
+var Slack = require('slock');
 
 // give it our token
 var slack = new Slack('insert api token here');
