@@ -1,18 +1,22 @@
 {
-  "name": "slack-frp",
-  "description": "a terse, functional reactive slack api",
+  "name": "slock",
+  "description": "promise-based and functional reactive bindings to Slack's API",
   "version": "0.0.1",
   "keywords": [
     "slack",
     "api",
     "functional",
+    "reactive",
     "rtm",
     "real",
     "time",
     "web",
     "hook",
     "bot",
-    "integration"
+    "integration",
+    "incoming",
+    "outgoing",
+    "promise"
   ],
   "scripts": {
     "release": "npm publish",
@@ -27,10 +31,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/declandewet/slack-frp"
+    "url": "https://github.com/declandewet/slock"
   },
   "bugs": {
-    "url": "http://github.com/declandewet/slack-frp/issues",
+    "url": "http://github.com/declandewet/slock/issues",
     "email": "declandewet@me.com"
   },
   "directories": {

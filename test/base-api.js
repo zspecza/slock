@@ -7,6 +7,9 @@ import BaseAPI        from '../lib/base-api';
 
 chai.use(asPromised);
 
+/*
+  do not attempt to use these credentials, they are fake
+ */
 const {expect}   = chai;
 const token      = 'xoxb-9545181767-KLtao5iiYssThypRBQ5CBHeX';
 const webhook    = 'https://hooks.slack.com/services/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';
