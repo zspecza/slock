@@ -29,8 +29,8 @@ describe('BaseAPI class constructor', () => {
   });
 
   it('should throw an error if string arguments is not a valid URL or token and does not match expected URL types', () => {
-    let err = '[fatal] the string you provided as Slack options is invalid. expected an API token, slackbot URL or incoming webhook URL, but instead got "banana"';
-    expect(() => new BaseAPI('banana').to.throw(err));
+    let err = '[fatal] unrecognized option "banana". please specify a valid API token, slackbot URL, webhook URL or an object containing these properties.';
+    expect(() => new BaseAPI('banana')).to.throw(err);
   });
 
 });
@@ -82,5 +82,34 @@ describe('BaseAPI slackbot', () => {
     expect(base_bot).to.have.property('defaults').that.deep.equals({
       slackbot
     });
+  });
+});
+
+describe('BaseAPI object settings', () => {
+  it('should throw an error if opts.token is invalid', () => {
+    let err = '[fatal] "1234" is not a valid Slack API token.';
+    expect(() => new BaseAPI({
+      token: '1234'
+    })).to.throw(err);
+  });
+
+  it('should throw an error if opts.webhook is invalid', () => {
+    let err = '[fatal] "1234" is not a valid webhook URL.';
+    expect(() => new BaseAPI({
+      webhook: '1234'
+    })).to.throw(err);
+    expect(() => new BaseAPI({
+      webhook: 'hooks.slack'
+    })).to.throw(err.replace('1234', 'hooks.slack'));
+  });
+
+  it('should throw an error if opts.slackbot is invalid', () => {
+    let err = '[fatal] "1234" is not a valid slackbot URL.';
+    expect(() => new BaseAPI({
+      slackbot: '1234'
+    })).to.throw(err);
+    expect(() => new BaseAPI({
+      slackbot: 'slackbot?'
+    })).to.throw(err.replace('1234', 'slackbot?'));
   });
 });
