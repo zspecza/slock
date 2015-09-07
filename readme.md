@@ -1,3 +1,7 @@
+
+![slock logo](http://imgh.us/slock-logo.svg)
+> Slock is not affiliated with or endorsed by Slack in any way
+
 Info | Badges
 -----|-------
 Version | [![github release](https://img.shields.io/github/release/declandewet/slock.svg?style=flat-square)](https://github.com/declandewet/slock/releases/latest) [![npm version](https://img.shields.io/npm/v/slock.svg?style=flat-square)](http://npmjs.org/package/slock)
