@@ -1,7 +1,11 @@
 
-import chai           from 'chai';
 import {EventEmitter} from 'events';
+import chai           from 'chai';
+import asPromised     from 'chai-as-promised';
+import nock           from 'nock';
 import BaseAPI        from '../lib/base-api';
+
+chai.use(asPromised);
 
 const {expect}   = chai;
 const token      = 'xoxb-9545181767-KLtao5iiYssThypRBQ5CBHeX';
@@ -10,6 +14,7 @@ const slackbot   = 'https://99anime.slack.com/services/hooks/slackbot?token=9hoU
 const base_token = new BaseAPI(token);
 const base_hook  = new BaseAPI(webhook);
 const base_bot   = new BaseAPI(slackbot);
+const base_all   = new BaseAPI({ slackbot, token, webhook });
 
 describe('BaseAPI class constructor', () => {
 
@@ -112,4 +117,54 @@ describe('BaseAPI object settings', () => {
       slackbot: 'slackbot?'
     })).to.throw(err.replace('1234', 'slackbot?'));
   });
+});
+
+describe('BaseAPI', () => {
+
+  describe('method calling', () => {
+
+    it('should allow you to call slack web api methods', () => {
+
+      nock.cleanAll();
+      nock('https://slack.com')
+        .get(`/api/api.test?foo=bar&bar=%5B%22fizz%22%2C%22buzz%22%5D`)
+        .reply(200, {
+          ok: true,
+          args: {
+            foo: 'bar',
+            bar: '["fizz","buzz"]'
+          }
+        });
+
+      return expect(base_all.method('api.test', {
+        foo: 'bar',
+        bar: ['fizz', 'buzz']
+      })).to.eventually.deep.equal({
+        ok: true,
+        args: {
+          foo: 'bar',
+          bar: '["fizz","buzz"]'
+        }
+      });
+    });
+
+    it('should reject when an error is returned from the api', () => {
+
+      nock.cleanAll();
+      nock('https://slack.com')
+        .get(`/api/api.test?error=fake_error`)
+        .reply(200, {
+          ok: false,
+          error: 'fake_error'
+        });
+
+      return expect(base_all.method('api.test', {
+        error: 'fake_error'
+      })).to.be.rejectedWith(
+        '[error] the response returned with error "fake_error"'
+      );
+    });
+
+  });
+
 });
