@@ -4,6 +4,8 @@
 
 Info | Badges
 -----|-------
+
+[![Join the chat at https://gitter.im/declandewet/slock](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/declandewet/slock?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 Version | [![github release](https://img.shields.io/github/release/declandewet/slock.svg?style=flat-square)](https://github.com/declandewet/slock/releases/latest) [![npm version](https://img.shields.io/npm/v/slock.svg?style=flat-square)](http://npmjs.org/package/slock)
 License | [![npm license](https://img.shields.io/npm/l/slock.svg?style=flat-square)](https://github.com/declandewet/slock/blob/master/license.md)
 Popularity | [![npm downloads](https://img.shields.io/npm/dm/slock.svg?style=flat-square)](http://npm-stat.com/charts.html?package=slock)
