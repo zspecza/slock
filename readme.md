@@ -1,5 +1,5 @@
 
-![slock logo](http://imgh.us/slock-logo.svg)
+![slock logo](http://imgh.us/slock-logo_1.svg)
 > Slock is not affiliated with or endorsed by Slack in any way
 
 Info | Badges
@@ -9,7 +9,7 @@ License | [![npm license](https://img.shields.io/npm/l/slock.svg?style=flat-squa
 Popularity | [![npm downloads](https://img.shields.io/npm/dm/slock.svg?style=flat-square)](http://npm-stat.com/charts.html?package=slock)
 Testing | [![build status](https://img.shields.io/travis/declandewet/slock.svg?style=flat-square)](https://travis-ci.org/declandewet/slock) [![test coverage](https://img.shields.io/coveralls/declandewet/slock.svg?style=flat-square)](https://coveralls.io/github/declandewet/slock)
 Quality | [![dependency status](https://img.shields.io/david/declandewet/slock.svg?style=flat-square)](https://david-dm.org/declandewet/slock) [![dev dependency status](https://img.shields.io/david/dev/declandewet/slock.svg?style=flat-square)](https://david-dm.org/declandewet/slock#info=devDependencies)
-
+Help/Community | [![Join the chat at https://gitter.im/declandewet/slock](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/declandewet/slock?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Slock
 ---------
