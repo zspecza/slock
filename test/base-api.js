@@ -170,4 +170,38 @@ describe('BaseAPI', () => {
 
   });
 
+  describe('webhooks', () => {
+
+    it('should allow sending messages to an incoming webhook', () => {
+
+      let payload = {
+        username: 'botty',
+        text: 'hello, my name is botty!'
+      };
+
+      nock.cleanAll();
+      nock('https://hooks.slack.com')
+        .post(`/services/T07S5PUC9/B0A89FLF4/SIAXbUiaYuuSEY0JzW1DjAE9`, payload)
+        .reply(200, 'ok');
+
+      return expect(base_all.submit(payload))
+        .to.eventually.equal('ok');
+    });
+
+    it('should error out if data is malformed or missing', () => {
+
+      let payload = { invalid: 'data' };
+
+      nock.cleanAll();
+      nock('https://hooks.slack.com')
+        .post(`/services/T07S5PUC9/B0A89FLF4/SIAXbUiaYuuSEY0JzW1DjAE9`, payload)
+        .reply(500, 'No text specified');
+
+      return expect(base_all.submit(payload)).to.be.rejectedWith(
+        '[error] the response returned with error "No text specified"'
+      );
+    });
+
+  });
+
 });
