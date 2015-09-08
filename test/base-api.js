@@ -204,4 +204,53 @@ describe('BaseAPI', () => {
 
   });
 
+  describe('slackbot', () => {
+
+    it('should allow sending messages as slackbot', () => {
+
+      let payload = {
+        text: 'hello, my name is slackbot!'
+      };
+
+      nock.cleanAll();
+      nock('https://99anime.slack.com')
+        .post(`/services/hooks/slackbot?token=9hoUdHCcXZaxgSr8IY2512EB&channel=%23general`, payload.text)
+        .reply(200, 'ok');
+
+      return expect(base_all.slackbot(payload))
+        .to.eventually.equal('ok');
+    });
+
+    it('should allow channel overrides', () => {
+
+      let payload = {
+        text: 'hello, my name is slackbot!',
+        channel: '#random'
+      };
+
+      nock.cleanAll();
+      nock('https://99anime.slack.com')
+        .post(`/services/hooks/slackbot?token=9hoUdHCcXZaxgSr8IY2512EB&channel=%23random`, payload.text)
+        .reply(200, 'ok');
+
+      return expect(base_all.slackbot(payload))
+        .to.eventually.equal('ok');
+    });
+
+    it('should error out if data is malformed or missing', () => {
+
+      let payload = { text: '' };
+
+      nock.cleanAll();
+      nock('https://99anime.slack.com')
+        .post(`/services/hooks/slackbot?token=9hoUdHCcXZaxgSr8IY2512EB&channel=%23general`, payload.text)
+        .reply(500, 'no_text');
+
+      return expect(base_all.slackbot(payload)).to.be.rejectedWith(
+        '[error] the response returned with error "no_text"'
+      );
+    });
+
+  });
+
 });
