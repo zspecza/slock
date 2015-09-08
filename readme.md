@@ -1,5 +1,5 @@
 
-![slock logo](http://imgh.us/slock-logo_1.svg)
+![slock logo](http://imgh.us/slock-logo_2.svg)
 > Slock is not affiliated with or endorsed by Slack in any way
 
 Info | Badges
