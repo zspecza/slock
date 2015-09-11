@@ -165,7 +165,7 @@ describe('BaseAPI', () => {
       return expect(base_all.method('api.test', {
         error: 'fake_error'
       })).to.be.rejectedWith(
-        '[error] the response returned with error "fake_error"'
+        '[api.test error] the response returned with error "fake_error" - No description.'
       );
     });
 
