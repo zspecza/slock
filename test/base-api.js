@@ -4,6 +4,7 @@ import chai           from 'chai';
 import asPromised     from 'chai-as-promised';
 import nock           from 'nock';
 import BaseAPI        from '../lib/base-api';
+import MockSocket     from 'mock-socket/dist/mock-socket';
 
 chai.use(asPromised);
 
@@ -255,31 +256,49 @@ describe('BaseAPI', () => {
 
   describe('connect shorthand method', () => {
 
+    const api = '/api/rtm.start?token=xoxb-9545181767-KLtao5iiYssThypRBQ5CBHeX';
+    const socketAddress = 'ws://localhost:8080';
+
+    let mockServer = new MockServer('ws://localhost:8080');
+    mockServer.on('connection', server => {
+      mockServer.send({ type: 'hello' });
+    });
+
+    class MockSock extends EventEmitter {
+      constructor(url) {
+        super();
+        if (url === 'invalid') throw new Error('invalid url');
+        let ws = new MockWebSocket(url);
+        ['message', 'open', 'error']
+          .forEach(evt => ws[`on${evt}`] = (
+            m => this.emit(evt, (evt === 'message' ? JSON.stringify(m) : m)))
+          );
+      }
+    }
+
     it('should resolve to the HTTP response for `rtm.start`', () => {
 
       nock.cleanAll();
       nock('https://slack.com')
-        .get('/api/rtm.start?token=xoxb-9545181767-KLtao5iiYssThypRBQ5CBHeX')
+        .get(api)
         .reply(200, {
           ok: true,
-          url: 'wss:\/\/ms383.slack-msgs.com\/websocket\/TCRhQ8AXcxtwrGj7jCL2-tq0FEvsnZSI0o1klbKDNF2zwKaQfa-W0Dn8rwu_7migZo-orW2-HPFtcPk5LJx-hwVId-LViYCoW3pueguwtEo='
+          url: socketAddress
         });
 
-      return expect(base_all.connect()).to.eventually.have.property('url')
-        .that.equals(
-          'wss:\/\/ms383.slack-msgs.com\/websocket\/TCRhQ8AXcxtwrGj7jCL2-tq0FEvsnZSI0o1klbKDNF2zwKaQfa-W0Dn8rwu_7migZo-orW2-HPFtcPk5LJx-hwVId-LViYCoW3pueguwtEo='
-        );
+      return expect(base_all.connect(null, MockSock)).to.eventually.have.property('url')
+        .that.equals(socketAddress);
     });
 
     it('should throw an error when connecting to socket goes wrong', () => {
       nock.cleanAll();
       nock('https://slack.com')
-        .get('/api/rtm.start?token=xoxb-9545181767-KLtao5iiYssThypRBQ5CBHeX')
+        .get(api)
         .reply(200, {
           ok: true,
           url: 'invalid'
         });
-      return expect(base_all.connect()).to.be.rejectedWith(
+      return expect(base_all.connect(null, MockSock)).to.be.rejectedWith(
         `invalid url`
       );
     });
