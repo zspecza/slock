@@ -20,6 +20,29 @@ const base_hook  = new BaseAPI(webhook);
 const base_bot   = new BaseAPI(slackbot);
 const base_all   = new BaseAPI({ slackbot, token, webhook });
 
+const socketAddress = 'ws://localhost:8080';
+
+let mockServer = new MockServer(socketAddress);
+mockServer.on('connection', server => {
+  mockServer.send({ type: 'hello' });
+});
+
+class MockSock extends EventEmitter {
+  constructor(url) {
+    super();
+    if (url === 'invalid') throw new Error('invalid url');
+    let ws = new MockWebSocket(url);
+    ['message', 'open', 'error']
+      .forEach(evt => ws[`on${evt}`] = (
+        m => this.emit(evt, (evt === 'message' ? JSON.stringify(m) : m)))
+      );
+  }
+  send(data, callback) {
+    callback && callback();
+    return 1;
+  }
+}
+
 describe('BaseAPI class constructor', () => {
 
   it('should be instance of EventEmitter', () => {
@@ -257,24 +280,6 @@ describe('BaseAPI', () => {
   describe('connect shorthand method', () => {
 
     const api = '/api/rtm.start?token=xoxb-9545181767-KLtao5iiYssThypRBQ5CBHeX';
-    const socketAddress = 'ws://localhost:8080';
-
-    let mockServer = new MockServer('ws://localhost:8080');
-    mockServer.on('connection', server => {
-      mockServer.send({ type: 'hello' });
-    });
-
-    class MockSock extends EventEmitter {
-      constructor(url) {
-        super();
-        if (url === 'invalid') throw new Error('invalid url');
-        let ws = new MockWebSocket(url);
-        ['message', 'open', 'error']
-          .forEach(evt => ws[`on${evt}`] = (
-            m => this.emit(evt, (evt === 'message' ? JSON.stringify(m) : m)))
-          );
-      }
-    }
 
     it('should resolve to the HTTP response for `rtm.start`', () => {
 
@@ -285,6 +290,8 @@ describe('BaseAPI', () => {
           ok: true,
           url: socketAddress
         });
+
+      base_all.connect({ dontExecute: true });
 
       return expect(base_all.connect(null, MockSock)).to.eventually.have.property('url')
         .that.equals(socketAddress);
@@ -301,6 +308,36 @@ describe('BaseAPI', () => {
       return expect(base_all.connect(null, MockSock)).to.be.rejectedWith(
         `invalid url`
       );
+    });
+
+  });
+
+  describe('send method for sending RTM messages', () => {
+
+    class MockSock extends EventEmitter {
+      constructor(url) {
+        super();
+        if (url === 'invalid') throw new Error('invalid url');
+        let ws = new MockWebSocket(url);
+        ['message', 'open', 'error']
+          .forEach(evt => ws[`on${evt}`] = (
+            m => this.emit(evt, (evt === 'message' ? JSON.stringify(m) : m)))
+          );
+      }
+      send(data, callback) {
+        callback();
+        return 1;
+      }
+    }
+
+    it('should throw an error if the message is too long', () => {
+      expect(() => {
+        base_all.send({ text: new Array(4002).join('.')});
+      }).to.throw('message needs to be under 16kb. try chunking your ".send" calls.');
+    });
+
+    it('should return an ID', () => {
+      expect(base_all.send({})).to.equal(1);
     });
 
   });
