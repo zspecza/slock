@@ -253,4 +253,37 @@ describe('BaseAPI', () => {
 
   });
 
+  describe('connect shorthand method', () => {
+
+    it('should resolve to the HTTP response for `rtm.start`', () => {
+
+      nock.cleanAll();
+      nock('https://slack.com')
+        .get('/api/rtm.start?token=xoxb-9545181767-KLtao5iiYssThypRBQ5CBHeX')
+        .reply(200, {
+          ok: true,
+          url: 'wss:\/\/ms383.slack-msgs.com\/websocket\/TCRhQ8AXcxtwrGj7jCL2-tq0FEvsnZSI0o1klbKDNF2zwKaQfa-W0Dn8rwu_7migZo-orW2-HPFtcPk5LJx-hwVId-LViYCoW3pueguwtEo='
+        });
+
+      return expect(base_all.connect()).to.eventually.have.property('url')
+        .that.equals(
+          'wss:\/\/ms383.slack-msgs.com\/websocket\/TCRhQ8AXcxtwrGj7jCL2-tq0FEvsnZSI0o1klbKDNF2zwKaQfa-W0Dn8rwu_7migZo-orW2-HPFtcPk5LJx-hwVId-LViYCoW3pueguwtEo='
+        );
+    });
+
+    it('should throw an error when connecting to socket goes wrong', () => {
+      nock.cleanAll();
+      nock('https://slack.com')
+        .get('/api/rtm.start?token=xoxb-9545181767-KLtao5iiYssThypRBQ5CBHeX')
+        .reply(200, {
+          ok: true,
+          url: 'invalid'
+        });
+      return expect(base_all.connect()).to.be.rejectedWith(
+        `invalid url`
+      );
+    });
+
+  });
+
 });
