@@ -47,6 +47,7 @@
     "coveralls": "^2.11.4",
     "isparta": "^3.0.4",
     "mocha": "^2.3.0",
+    "mock-socket": "^0.8.0",
     "nock": "^2.10.0"
   },
   "dependencies": {

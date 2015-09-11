@@ -4,6 +4,7 @@ import chai           from 'chai';
 import asPromised     from 'chai-as-promised';
 import nock           from 'nock';
 import BaseAPI        from '../lib/base-api';
+import MockSocket     from 'mock-socket/dist/mock-socket';
 
 chai.use(asPromised);
 
@@ -248,6 +249,57 @@ describe('BaseAPI', () => {
 
       return expect(base_all.slackbot(payload)).to.be.rejectedWith(
         '[error] the response returned with error "no_text"'
+      );
+    });
+
+  });
+
+  describe('connect shorthand method', () => {
+
+    const api = '/api/rtm.start?token=xoxb-9545181767-KLtao5iiYssThypRBQ5CBHeX';
+    const socketAddress = 'ws://localhost:8080';
+
+    let mockServer = new MockServer('ws://localhost:8080');
+    mockServer.on('connection', server => {
+      mockServer.send({ type: 'hello' });
+    });
+
+    class MockSock extends EventEmitter {
+      constructor(url) {
+        super();
+        if (url === 'invalid') throw new Error('invalid url');
+        let ws = new MockWebSocket(url);
+        ['message', 'open', 'error']
+          .forEach(evt => ws[`on${evt}`] = (
+            m => this.emit(evt, (evt === 'message' ? JSON.stringify(m) : m)))
+          );
+      }
+    }
+
+    it('should resolve to the HTTP response for `rtm.start`', () => {
+
+      nock.cleanAll();
+      nock('https://slack.com')
+        .get(api)
+        .reply(200, {
+          ok: true,
+          url: socketAddress
+        });
+
+      return expect(base_all.connect(null, MockSock)).to.eventually.have.property('url')
+        .that.equals(socketAddress);
+    });
+
+    it('should throw an error when connecting to socket goes wrong', () => {
+      nock.cleanAll();
+      nock('https://slack.com')
+        .get(api)
+        .reply(200, {
+          ok: true,
+          url: 'invalid'
+        });
+      return expect(base_all.connect(null, MockSock)).to.be.rejectedWith(
+        `invalid url`
       );
     });
 
