@@ -1,7 +1,7 @@
 {
   "name": "slock",
   "description": "promise-based and functional reactive bindings to Slack's API",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "keywords": [
     "slack",
     "api",
