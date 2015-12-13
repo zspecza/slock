@@ -3,7 +3,7 @@ import {EventEmitter} from 'events';
 import chai           from 'chai';
 import asPromised     from 'chai-as-promised';
 import nock           from 'nock';
-import BaseAPI        from '../lib/base-api';
+import BaseAPI        from '../lib/base';
 import MockSocket     from 'mock-socket/dist/mock-socket';
 
 chai.use(asPromised);

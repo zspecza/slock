@@ -1,6 +1,6 @@
 import chai    from 'chai';
 import Slack   from '../lib';
-import BaseAPI from '../lib/base-api';
+import BaseAPI from '../lib/base';
 
 const {expect} = chai;
 const token    = 'xoxb-9545181767-KLtao5iiYssThypRBQ5CBHeX';
